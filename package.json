@@ -1,0 +1,16 @@
+{
+  "name": "d-table",
+  "version": "1.0.0",
+  "description": "",
+  "main": "d-table.js",
+  "devDependencies": {},
+  "scripts": {
+    "build:tsc": "tsc -p tsconfig.json",
+    "build": "npm run build && rollup app.ts --file bundle.js --format es"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "rollup": "^2.77.0"
+  }
+}
