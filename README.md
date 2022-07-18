@@ -1,7 +1,7 @@
-# dTableA 
+# dTable
 A lightweight vanilla JavaScript reactive table component.
 
-[Live](https://ranjanngc.github.io/dtable.github.io/)
+[Live](https://ranjanngc.github.io/dTable/)
 
 ## Idealogy
 We have many HTML table components out there then why a new component again? 
