@@ -6,7 +6,7 @@
   "devDependencies": {},
   "scripts": {
     "build:tsc": "tsc -p tsconfig.json",
-    "build": "npm run build && rollup app.ts --file bundle.js --format es"
+    "build": "npm run build:tsc && rollup app.ts --file demo/bundle.js --format es"
   },
   "author": "",
   "license": "ISC",
