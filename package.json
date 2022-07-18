@@ -4,13 +4,17 @@
   "description": "",
   "main": "d-table.js",
   "devDependencies": {},
+
   "scripts": {
+
     "build:tsc": "tsc -p tsconfig.json",
-    "build": "npm run build:tsc && rollup app.ts --file dTable.js --format es"
+    "build": "npm run build:tsc && rollup app.ts --file dTable.js --format es",
+    "docs": "npm run build && copy index.html docs && copy dTable.js docs"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+
     "rollup": "^2.77.0"
   }
 }
