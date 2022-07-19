@@ -4,7 +4,7 @@ var Header = {
             var hdr_1 = "<thead data-id='table_header' ><tr>";
             headers.forEach(function (header, index) {
                 header.index = index;
-                var filterElement = header.filterable ? '<span data-role="search">🔍</span><input type="text" aria-hidden="true" autofocus style="display:none">' : '';
+                var filterElement = header.filterable ? '<span data-role="search">🔍</span><input data-role="d-search" type="text" aria-hidden="true" autofocus style="display:none">' : '';
                 hdr_1 += "<th data-index=\"".concat(index, "\" title=\"").concat(header.title, "\">").concat(filterElement, "<span>").concat(header.title, "</span> ").concat(header.sortable ? "<span data-role=\"sort\" style=\"cursor:pointer\">".concat(header.sortOrder === 'ASC' ? '▲' : '▼', "</span>") : '', "</th>"); //▼
             });
             hdr_1 += "</tr></thead>";

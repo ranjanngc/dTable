@@ -1,38 +1,62 @@
 <!Doctype>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+        <!-- Custom styling for dTable. This can be changed as per application theme-->
         <style>
-            .html{
-                height: 100vh;
-            }
-            .container{
-                width: 95vw;
-                height: 94%;
-                overflow: scroll;
-                align-items: center;
-            }
-            table th {
-                background-color: white;
-                position: sticky;
-                top:0px;
-               
-            }
-            /* table tr>th {
-                display: flex;
-                flex-direction: row;
-                
-            } */
-            table th span[data-role="search"], table th span[data-role="sort"] {
-                cursor: pointer;
-            }
-            table th span[data-role="search"]{
-                float: left;
-                padding-left: .3em;
-            }
-            table th span[data-role="sort"]{
-                float: right;
-                padding-right: .3em;
-            }
+        .html{
+            height: 100vh;
+        }
+        body{
+            font-family: 'Roboto', sans-serif;
+        }
+        .container{
+            width: 95vw;
+            height: 83%;
+            overflow: auto;
+            align-items: center;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        table thead {
+            height: 2em;
+        }
+        table th {
+            background-color: #CFD2CF;
+            position: sticky;
+            top:0px;
+            
+        }
+        input[data-role="d-search"] {
+            background-color: #CFD2CF;
+            border-color: #CFD2CF;
+            outline: none
+        }
+        table th input:active {
+            border-color: transparent;
+            outline-color: transparent;
+        }
+        table th span[data-role="search"], table th span[data-role="sort"] {
+            cursor: pointer;
+        }
+        table th span[data-role="search"]{
+            float: left;
+            padding-left: .3em;
+        }
+        table th span[data-role="sort"]{
+            float: right;
+            padding-right: .3em;
+        }
+        
+        table tr, table td {
+            border: .1em solid #ddd;
+            padding: 8px;
+        }
         </style>
     </head>
     <body>
