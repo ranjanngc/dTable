@@ -1,9 +1,10 @@
-<!Doctype>
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>dTable Demo Page</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
-        
+        <link rel="preload" as="font" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 
         <!-- Custom styling for dTable. This can be changed as per application theme-->
@@ -63,7 +64,13 @@
         }
         table th span[data-role="search"]{
             float: left;
-            padding-left: .3em;
+           
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' id='Outline' viewBox='0 0 24 24' width='1.2em' height='1.2em'><path d='M23.707,22.293l-5.969-5.969a10.016,10.016,0,1,0-1.414,1.414l5.969,5.969a1,1,0,0,0,1.414-1.414ZM10,18a8,8,0,1,1,8-8A8.009,8.009,0,0,1,10,18Z'/></svg>");
+            content: '';
+            background-repeat: no-repeat;
+            width: 1.2em;
+            height: 1.3em;
+            margin-left: .3em;
         }
         table th span[data-role="sort"]{
             float: right;
@@ -81,5 +88,12 @@
         <h3>Demo Table</h3>
     <div id="app"></div>
         <script type="module" src="dTable.js"></script>
+        <script>
+            //
+            function sayHello(data){
+                alert(data)
+            }
+        </script>
+    
     </body>
 </html>

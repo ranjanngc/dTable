@@ -4,7 +4,7 @@ var Header = {
             var hdr_1 = "<thead data-id='table_header' ><tr>";
             headers.forEach(function (header, index) {
                 header.index = index;
-                var filterElement = header.filterable ? '<span data-role="search">🔍</span><input data-role="d-search" type="text" aria-hidden="true" autofocus style="display:none">' : '';
+                var filterElement = header.filterable ? '<span data-role="search"> </span><input data-role="d-search" type="text" autofocus style="display:none">' : '';
                 hdr_1 += "<th data-index=\"".concat(index, "\" title=\"").concat(header.title, "\">").concat(filterElement, "<span>").concat(header.title, "</span> ").concat(header.sortable ? "<span data-role=\"sort\">".concat(header.sortOrder === 'ASC' ? '▲' : '▼', "</span>") : '', "</th>"); //▼
             });
             hdr_1 += "</tr></thead>";
@@ -13,12 +13,12 @@ var Header = {
     },
 };
 var Body = {
-    render: function (data) {
+    render: function (data, header) {
         var _this = this;
         if (data) {
             var hdr_2 = "<tbody>";
             data.forEach(function (rows, rowIndex) {
-                hdr_2 += "<tr style='content-visibility: auto' aria-hidden='true'>";
+                hdr_2 += "<tr style='content-visibility:auto'>";
                 rows.forEach(function (item, colIndex) {
                     if (_this.edit_row === rowIndex && _this.edit_col == colIndex) {
                         hdr_2 += "<td><input type=\"text\" style=\"width:100%\" autofocus  value=\"".concat(item, "\" onchange=\"rk_table.updateData(this.value, ").concat(rowIndex, ", ").concat(colIndex, ")\"></td>");
@@ -26,8 +26,9 @@ var Body = {
                         _this.edit_col = null;
                     }
                     else {
+                        var template = header[colIndex].template ? Body.resolveTemplate(header[colIndex].template, rows) : item;
                         //hdr += `<td>${item} <span style="cursor:pointer;" onclick="rk_table.setEdit(${rowIndex}, ${colIndex})" >🖉</span></td>`;
-                        hdr_2 += "<td>".concat(item, "</td>");
+                        hdr_2 += "<td>".concat(template, "</td>");
                     }
                 });
                 hdr_2 += "</tr>";
@@ -35,6 +36,13 @@ var Body = {
             hdr_2 += "</tbody>";
             return hdr_2;
         }
+    },
+    resolveTemplate: function (template, items) {
+        items.forEach(function (val, index) {
+            var reg = new RegExp("\\{".concat(index, "\\}"), 'g');
+            template = template.replace(reg, items[index]);
+        });
+        return template;
     }
 };
 
@@ -96,7 +104,7 @@ var Table = {
     render: function (tableData, table) {
         Table.data = tableData;
         Table.element = table;
-        var html = "<div class=\"".concat(tableData.containerClass, "\"><table width=\"100%\">\n                        ").concat(Header.render(tableData.Header), " \n                        ").concat(Body.render(tableData.Body), "\n        </table></div>");
+        var html = "<div class=\"".concat(tableData.containerClass, "\"><table width=\"100%\">\n                        ").concat(Header.render(tableData.Header), " \n                        ").concat(Body.render(tableData.Body, tableData.Header), "\n        </table></div>");
         table.innerHTML = html;
         var hdr = document.querySelector("thead[data-id='table_header']");
         hdr.addEventListener('click', Table.clickHandler);
@@ -107,7 +115,7 @@ var Table = {
     getMeta: function (target) {
         var _a;
         var role = target.getAttribute("data-role");
-        var hdrElement = target.parentElement;
+        var hdrElement = target.closest('th');
         //if(hdrElement?.tagName !== "TH"){return}
         var hdrIndex = parseInt((_a = hdrElement.getAttribute('data-index')) !== null && _a !== void 0 ? _a : '-1');
         return [hdrElement, role, hdrIndex];
@@ -165,21 +173,22 @@ dTable.data = {
         { title: "Name", filterable:true }, 
         { title: "Age", sortable: true }, 
         { title: "Location", sortable: true }, 
-        { title: 'EMail'}, 
-        { title: 'Telephone'}
+        { title: 'EMail', template: '<a href="mailto:{3}">{3}</a>'}, 
+        { title: 'Telephone'},
+        { title: '', template: '<button onclick="sayHello(\'Hi {0}\')">Action</button>'}
     ],
     Body: [
-        ["Name001", 42, "Location390", 'abc@gmail.com', '+91 011 568974'],
-        ["Name002", 42, "Location390", 'abc@gmail.com', '+91 011 568974'],
+        ["Name001", 42, "Location390", 'abc@gmail.com', '+91 011 568974', 'action data'],
+        ["Name002", 42, "Location390", 'abc@gmail.com', '+91 011 568974', 'action data'],
     ],
     containerClass: 'container'
 };
 
 let tableBodyData = dTable.data.Body;
 
-for(let i=0; i< 1000 ;i ++){
+for(let i=0,j =10; i< j ;i ++){
 
-    tableBodyData.push([`Name00${i}`,(i+5), `Location${500-i}`, 'abc@gmail.com', '+91 011 568974']);
+    tableBodyData.push([`Name00${i}`,(i+5), `Location${500-i}`, 'abc@gmail.com', '+91 011 568974', 'action data']);
 }
 
 dTable.body = tableBodyData;

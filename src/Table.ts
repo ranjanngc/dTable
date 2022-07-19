@@ -15,7 +15,7 @@ export const Table = {
 
         const html = `<div class="${tableData.containerClass}"><table width="100%">
                         ${Header.render(tableData.Header)} 
-                        ${Body.render(tableData.Body)}
+                        ${Body.render(tableData.Body, tableData.Header)}
         </table></div>`;
 
         table.innerHTML = html;
@@ -31,7 +31,7 @@ export const Table = {
     getMeta:(target: HTMLElement): [header: HTMLElement, role:string, index:number] => {
 
         const role = (target as HTMLSpanElement).getAttribute("data-role")
-        const hdrElement = (target as HTMLSpanElement).parentElement
+        const hdrElement = (target as HTMLSpanElement).closest('th')
         
         //if(hdrElement?.tagName !== "TH"){return}
         const hdrIndex = parseInt(hdrElement.getAttribute('data-index') ?? '-1')
