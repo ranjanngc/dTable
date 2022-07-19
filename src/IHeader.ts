@@ -6,6 +6,7 @@ export default interface IHeader {
     style: string,
     template: string,
     sortable: boolean,
+    filterable: boolean,
     index: number,
     sortOrder: string
 }

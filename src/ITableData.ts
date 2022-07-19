@@ -3,5 +3,6 @@ import IBody from './IBody'
 
 export default interface ITableData {
     Header : Array<IHeader>,
-    Body: Array<any>
+    Body: Array<any>,
+    containerClass: string
 }

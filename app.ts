@@ -5,7 +5,7 @@ dTable.init(document.querySelector('#app'));
 dTable.data = { 
 
     Header: [
-        { title: "Name" }, 
+        { title: "Name", filterable:true }, 
         { title: "Age", sortable: true }, 
         { title: "Location", sortable: true }, 
         { title: 'EMail'}, 
@@ -14,12 +14,13 @@ dTable.data = {
     Body: [
         ["Name001", 42, "Location390", 'abc@gmail.com', '+91 011 568974'],
         ["Name002", 42, "Location390", 'abc@gmail.com', '+91 011 568974'],
-    ]
+    ],
+    containerClass: 'container'
 }
 
 let tableBodyData = dTable.data.Body;
 
-for(let i=0; i< 100 ;i ++){
+for(let i=0; i< 1000 ;i ++){
 
     tableBodyData.push([`Name00${i}`,(i+5), `Location${500-i}`, 'abc@gmail.com', '+91 011 568974']);
 }

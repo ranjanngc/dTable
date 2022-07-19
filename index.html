@@ -1,6 +1,42 @@
 <!Doctype>
 <html>
+    <head>
+        <style>
+            .html{
+                height: 100vh;
+            }
+            .container{
+                width: 95vw;
+                height: 94%;
+                overflow: scroll;
+                align-items: center;
+            }
+            table th {
+                background-color: white;
+                position: sticky;
+                top:0px;
+               
+            }
+            /* table tr>th {
+                display: flex;
+                flex-direction: row;
+                
+            } */
+            table th span[data-role="search"], table th span[data-role="sort"] {
+                cursor: pointer;
+            }
+            table th span[data-role="search"]{
+                float: left;
+                padding-left: .3em;
+            }
+            table th span[data-role="sort"]{
+                float: right;
+                padding-right: .3em;
+            }
+        </style>
+    </head>
     <body>
+        <h3>Demo Table</h3>
     <div id="app"></div>
         <script type="module" src="dTable.js"></script>
     </body>

@@ -1,10 +1,11 @@
 var Header = {
     render: function (headers) {
         if (headers) {
-            var hdr_1 = "<thead data-id='table_header'><tr>";
+            var hdr_1 = "<thead data-id='table_header' ><tr>";
             headers.forEach(function (header, index) {
                 header.index = index;
-                hdr_1 += "<th data-index=\"".concat(index, "\">").concat(header.title, " ").concat(header.sortable ? "<span style=\"cursor:pointer\">".concat(header.sortOrder === 'ASC' ? '▲' : '▼', "</span>") : '', "</th>"); //▼
+                var filterElement = header.filterable ? '<span data-role="search">🔍</span><input type="text" aria-hidden="true" autofocus style="display:none">' : '';
+                hdr_1 += "<th data-index=\"".concat(index, "\" title=\"").concat(header.title, "\">").concat(filterElement, "<span>").concat(header.title, "</span> ").concat(header.sortable ? "<span data-role=\"sort\" style=\"cursor:pointer\">".concat(header.sortOrder === 'ASC' ? '▲' : '▼', "</span>") : '', "</th>"); //▼
             });
             hdr_1 += "</tr></thead>";
             return hdr_1;
@@ -17,7 +18,7 @@ var Body = {
         if (data) {
             var hdr_2 = "<tbody>";
             data.forEach(function (rows, rowIndex) {
-                hdr_2 += "<tr>";
+                hdr_2 += "<tr style='content-visibility: auto' aria-hidden='true'>";
                 rows.forEach(function (item, colIndex) {
                     if (_this.edit_row === rowIndex && _this.edit_col == colIndex) {
                         hdr_2 += "<td><input type=\"text\" style=\"width:100%\" autofocus  value=\"".concat(item, "\" onchange=\"rk_table.updateData(this.value, ").concat(rowIndex, ", ").concat(colIndex, ")\"></td>");
@@ -37,32 +38,103 @@ var Body = {
     }
 };
 
+var SortUtil = {
+    sort: function (TableUtil, hdrIndex) {
+        var header = TableUtil.data.Header[hdrIndex];
+        if (header.sortOrder == 'ASC') {
+            TableUtil.data.Body = TableUtil.data.Body.sort(function (a, b) { return a[hdrIndex] < b[hdrIndex] ? 1 : -1; });
+        }
+        else {
+            TableUtil.data.Body = TableUtil.data.Body.sort(function (a, b) { return a[hdrIndex] > b[hdrIndex] ? 1 : -1; });
+        }
+        header.sortOrder = (header.sortOrder === 'ASC' ? 'DESC' : 'ASC');
+        TableUtil.render(TableUtil.data, TableUtil.element);
+    }
+};
+
+var SearchUtil = {
+    showInput: function (header) {
+        var _a;
+        header.querySelectorAll('span').forEach(function (span) {
+            span.style.display = 'none';
+        });
+        var searchInput = header.querySelector('input');
+        searchInput.style.width = "100%";
+        searchInput.style.height = "100%";
+        searchInput.style.margin = '0px';
+        searchInput.style.border = '0.13em solid transparent';
+        searchInput.style.outlineColor = 'transparent';
+        searchInput.placeholder = ((_a = header.getAttribute('title')) !== null && _a !== void 0 ? _a : '') + ' ..press ESC to cancel';
+        searchInput.style.display = 'block';
+        searchInput.focus();
+    },
+    hideInput: function (table, header) {
+        header.querySelectorAll('span').forEach(function (span) {
+            span.style.display = '';
+        });
+        var searchInput = header.querySelector('input');
+        searchInput.style.display = 'none';
+        searchInput.value = '';
+        var tableElement = header.closest('table');
+        table.data.Body.forEach(function (item, rowIndex) {
+            tableElement.rows[rowIndex + 1].style.display = '';
+        });
+    },
+    search: function (table, header, index) {
+        var searchTerm = header.querySelector('input').value;
+        var tableElement = header.closest('table');
+        var reg = new RegExp(searchTerm, 'gi');
+        table.data.Body.forEach(function (item, rowIndex) {
+            tableElement.rows[rowIndex + 1].style.display = item[index].match(reg) ? '' : 'none';
+        });
+    }
+};
+
 var Table = {
     data: null,
     element: null,
     render: function (tableData, table) {
         Table.data = tableData;
         Table.element = table;
-        var html = "<table border>\n                        ".concat(Header.render(tableData.Header), " \n                        ").concat(Body.render(tableData.Body), "\n        </table>");
+        var html = "<div class=\"".concat(tableData.containerClass, "\"><table border width=\"100%\">\n                        ").concat(Header.render(tableData.Header), " \n                        ").concat(Body.render(tableData.Body), "\n        </table></div>");
         table.innerHTML = html;
         var hdr = document.querySelector("thead[data-id='table_header']");
-        hdr.addEventListener('click', Table.sort);
+        hdr.addEventListener('click', Table.clickHandler);
+        hdr.addEventListener('input', Table.inputHandler);
+        hdr.addEventListener('keyup', Table.keyupHandler);
+        hdr.closest('table').style.tableLayout = 'fixed';
     },
-    sort: function (ev) {
-        var hdrElement = ev.target.parentElement;
-        if (hdrElement.tagName !== "TH") {
+    getMeta: function (target) {
+        var _a;
+        var role = target.getAttribute("data-role");
+        var hdrElement = target.parentElement;
+        //if(hdrElement?.tagName !== "TH"){return}
+        var hdrIndex = parseInt((_a = hdrElement.getAttribute('data-index')) !== null && _a !== void 0 ? _a : '-1');
+        return [hdrElement, role, hdrIndex];
+    },
+    clickHandler: function (ev) {
+        var _a = Table.getMeta(ev.target), hdrElement = _a[0], role = _a[1], hdrIndex = _a[2];
+        if ((hdrElement === null || hdrElement === void 0 ? void 0 : hdrElement.tagName) !== "TH") {
             return;
         }
-        var hdrIndex = hdrElement.getAttribute('data-index');
-        var header = Table.data.Header[hdrIndex];
-        if (header.sortOrder == 'ASC') {
-            Table.data.Body = Table.data.Body.sort(function (a, b) { return a[hdrIndex] < b[hdrIndex] ? 1 : -1; });
+        switch (role) {
+            case "sort":
+                SortUtil.sort(Table, hdrIndex);
+                break;
+            case "search":
+                SearchUtil.showInput(hdrElement);
+                break;
         }
-        else {
-            Table.data.Body = Table.data.Body.sort(function (a, b) { return a[hdrIndex] > b[hdrIndex] ? 1 : -1; });
+    },
+    inputHandler: function (ev) {
+        var _a = Table.getMeta(ev.target), hdrElement = _a[0]; _a[1]; var hdrIndex = _a[2];
+        SearchUtil.search(Table, hdrElement, hdrIndex);
+    },
+    keyupHandler: function (ev) {
+        if (ev.key === "Escape") {
+            var hdrElement = Table.getMeta(ev.target)[0];
+            SearchUtil.hideInput(Table, hdrElement);
         }
-        header.sortOrder = (header.sortOrder === 'ASC' ? 'DESC' : 'ASC');
-        Table.render(Table.data, Table.element);
     }
 };
 
@@ -90,7 +162,7 @@ dTable.init(document.querySelector('#app'));
 dTable.data = { 
 
     Header: [
-        { title: "Name" }, 
+        { title: "Name", filterable:true }, 
         { title: "Age", sortable: true }, 
         { title: "Location", sortable: true }, 
         { title: 'EMail'}, 
@@ -99,12 +171,13 @@ dTable.data = {
     Body: [
         ["Name001", 42, "Location390", 'abc@gmail.com', '+91 011 568974'],
         ["Name002", 42, "Location390", 'abc@gmail.com', '+91 011 568974'],
-    ]
+    ],
+    containerClass: 'container'
 };
 
 let tableBodyData = dTable.data.Body;
 
-for(let i=0; i< 100 ;i ++){
+for(let i=0; i< 1000 ;i ++){
 
     tableBodyData.push([`Name00${i}`,(i+5), `Location${500-i}`, 'abc@gmail.com', '+91 011 568974']);
 }

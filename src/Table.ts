@@ -1,42 +1,71 @@
 import {Header, Body} from './Render'
 import ITableData from './ITableData'
+import { SortUtil } from './Sort'
+import { SearchUtil } from './SearchUtil'
 
 export const Table = {
-    data: null as unknown as ITableData,
-    element: null as unknown as HTMLTableElement,
+
+    data:       null as unknown as ITableData,
+    element:    null as unknown as HTMLTableElement,
+
     render: function(tableData: ITableData, table: HTMLTableElement) {
         
-        Table.data = tableData;
+        Table.data =    tableData;
         Table.element = table;
 
-        const html = `<table border>
+        const html = `<div class="${tableData.containerClass}"><table border width="100%">
                         ${Header.render(tableData.Header)} 
                         ${Body.render(tableData.Body)}
-        </table>`;
+        </table></div>`;
 
         table.innerHTML = html;
 
         
         let hdr = document.querySelector("thead[data-id='table_header']");
-        hdr.addEventListener('click', Table.sort)
+        hdr.addEventListener('click', Table.clickHandler)
+        hdr.addEventListener('input', Table.inputHandler)
+        hdr.addEventListener('keyup', Table.keyupHandler)
+
+        hdr.closest('table').style.tableLayout = 'fixed'
     },
-    sort: (ev) =>{
+    getMeta:(target: HTMLElement): [header: HTMLElement, role:string, index:number] => {
 
-        const hdrElement = (ev.target as HTMLSpanElement).parentElement;
-        if(hdrElement.tagName !== "TH"){return}
+        const role = (target as HTMLSpanElement).getAttribute("data-role")
+        const hdrElement = (target as HTMLSpanElement).parentElement
+        
+        //if(hdrElement?.tagName !== "TH"){return}
+        const hdrIndex = parseInt(hdrElement.getAttribute('data-index') ?? '-1')
 
-        const hdrIndex = hdrElement.getAttribute('data-index');
+        return [hdrElement, role, hdrIndex]
+    },
+    clickHandler: (ev) => {
 
-        const header = Table.data.Header[hdrIndex];
+        const [hdrElement, role, hdrIndex] = Table.getMeta(ev.target)
 
-        if(header.sortOrder == 'ASC'){
-            Table.data.Body = Table.data.Body.sort((a, b) => a[hdrIndex] < b[hdrIndex] ? 1 : -1)
+        if(hdrElement?.tagName !== "TH"){return}
+
+        switch(role){
+
+            case "sort":
+                SortUtil.sort(Table,  hdrIndex as number);
+                break;
+            case "search":
+                SearchUtil.showInput(hdrElement)
+                break;
+            default:
+                break;
         }
-        else {
-            Table.data.Body = Table.data.Body.sort((a, b) => a[hdrIndex] > b[hdrIndex] ? 1 : -1)
+    },
+    inputHandler: (ev) => {
+
+        const [hdrElement, _, hdrIndex] = Table.getMeta(ev.target)
+        SearchUtil.search(Table, hdrElement, hdrIndex)
+    },
+    keyupHandler: (ev) => {
+
+        if(ev.key === "Escape") {
+            const [hdrElement] = Table.getMeta(ev.target)
+            SearchUtil.hideInput(Table, hdrElement)
         }
-       
-        header.sortOrder = (header.sortOrder === 'ASC' ? 'DESC' : 'ASC')
-        Table.render(Table.data, Table.element);
     }
 } 
