@@ -11,7 +11,7 @@ export const Header = {
 
                 header.index = index
                 let filterElement = header.filterable ? '<span data-role="search">🔍</span><input data-role="d-search" type="text" aria-hidden="true" autofocus style="display:none">':'';
-                hdr += `<th data-index="${index}" title="${header.title}">${filterElement}<span>${header.title}</span> ${header.sortable? `<span data-role="sort" style="cursor:pointer">${header.sortOrder=== 'ASC'?'▲':'▼'}</span>`: ''}</th>`; //▼
+                hdr += `<th data-index="${index}" title="${header.title}">${filterElement}<span>${header.title}</span> ${header.sortable? `<span data-role="sort">${header.sortOrder=== 'ASC'?'▲':'▼'}</span>`: ''}</th>`; //▼
                 
             });
 

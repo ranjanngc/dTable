@@ -13,7 +13,7 @@ export const Table = {
         Table.data =    tableData;
         Table.element = table;
 
-        const html = `<div class="${tableData.containerClass}"><table border width="100%">
+        const html = `<div class="${tableData.containerClass}"><table width="100%">
                         ${Header.render(tableData.Header)} 
                         ${Body.render(tableData.Body)}
         </table></div>`;

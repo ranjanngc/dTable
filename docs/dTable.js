@@ -5,7 +5,7 @@ var Header = {
             headers.forEach(function (header, index) {
                 header.index = index;
                 var filterElement = header.filterable ? '<span data-role="search">🔍</span><input data-role="d-search" type="text" aria-hidden="true" autofocus style="display:none">' : '';
-                hdr_1 += "<th data-index=\"".concat(index, "\" title=\"").concat(header.title, "\">").concat(filterElement, "<span>").concat(header.title, "</span> ").concat(header.sortable ? "<span data-role=\"sort\" style=\"cursor:pointer\">".concat(header.sortOrder === 'ASC' ? '▲' : '▼', "</span>") : '', "</th>"); //▼
+                hdr_1 += "<th data-index=\"".concat(index, "\" title=\"").concat(header.title, "\">").concat(filterElement, "<span>").concat(header.title, "</span> ").concat(header.sortable ? "<span data-role=\"sort\">".concat(header.sortOrder === 'ASC' ? '▲' : '▼', "</span>") : '', "</th>"); //▼
             });
             hdr_1 += "</tr></thead>";
             return hdr_1;
@@ -96,7 +96,7 @@ var Table = {
     render: function (tableData, table) {
         Table.data = tableData;
         Table.element = table;
-        var html = "<div class=\"".concat(tableData.containerClass, "\"><table border width=\"100%\">\n                        ").concat(Header.render(tableData.Header), " \n                        ").concat(Body.render(tableData.Body), "\n        </table></div>");
+        var html = "<div class=\"".concat(tableData.containerClass, "\"><table width=\"100%\">\n                        ").concat(Header.render(tableData.Header), " \n                        ").concat(Body.render(tableData.Body), "\n        </table></div>");
         table.innerHTML = html;
         var hdr = document.querySelector("thead[data-id='table_header']");
         hdr.addEventListener('click', Table.clickHandler);

@@ -8,7 +8,11 @@
 
         <!-- Custom styling for dTable. This can be changed as per application theme-->
         <style>
-        .html{
+        :root{
+            --border:#aab6c1;
+            --header-bg:#F5F5F5;
+        }
+        html{
             height: 100vh;
         }
         body{
@@ -21,20 +25,33 @@
             align-items: center;
         }
         table {
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0px;
+            
         }
         table thead {
             height: 2em;
         }
-        table th {
-            background-color: #CFD2CF;
+        table thead th {
+            border-top: .001em solid var(--border);
+        }
+        table thead, table thead * {
+            background-color: var(--header-bg);
             position: sticky;
             top:0px;
-            
         }
+        table thead th:first-child, table tbody td:first-child {
+            border-left: .001em solid var(--border);
+        }
+
+        table thead th, table tbody td {
+            border-bottom: .001em solid var(--border);
+            border-right: .001em solid var(--border);
+        }
+
         input[data-role="d-search"] {
-            background-color: #CFD2CF;
-            border-color: #CFD2CF;
+            background-color: var(--header-bg);
+            border-color: var(--header-bg);
             outline: none
         }
         table th input:active {
@@ -53,10 +70,11 @@
             padding-right: .3em;
         }
         
-        table tr, table td {
-            border: .1em solid #ddd;
+        table tbody td {
+            
             padding: 8px;
         }
+       
         </style>
     </head>
     <body>
