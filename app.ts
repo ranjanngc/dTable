@@ -21,7 +21,7 @@ dTable.data = {
 
 let tableBodyData = dTable.data.Body;
 
-for(let i=0,j =10; i< j ;i ++){
+for(let i=0,j =50; i< j ;i ++){
 
     tableBodyData.push([`Name00${i}`,(i+5), `Location${500-i}`, 'abc@gmail.com', '+91 011 568974', 'action data']);
 }
