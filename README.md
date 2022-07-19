@@ -51,8 +51,8 @@ Use Live Server (https://marketplace.visualstudio.com/items?itemName=ritwickdey.
 ## Feature Status
 |Sr.|Feature|Status|Remarks|
 |---|-------|------|-------|
-|1  |Sorting| Partial Implementation| In Progress|
-|2  |Filter| -| -|
+|1  |Sorting| ✅| beta|
+|2  |Filter| ✅| beta|
 |3  |Grouping| -| -|
 |4  |Template| -| -|
 |5  |Styling| -| -|
