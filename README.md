@@ -23,14 +23,14 @@ dTable.init(document.querySelector('#app'));
 
 dTable.data = { 
     
-    Header: [
+    header: [
         { title: "Name" }, 
         { title: "Age", sortable: true }, 
         { title: "Location", sortable: true }, 
         { title: 'EMail'}, 
         { title: 'Telephone'}
     ],
-    Body: [
+    body: [
         ["Name1", 21, "Place1", 'abc@dTable.com', '011 568974'],
         ["Name2", 42, "Place2", 'abc@dTable.com', '011 568974'],
     ]
@@ -38,6 +38,13 @@ dTable.data = {
 ```
 **Why a flat array for the body?** JSON is great but repeating `key` names is overhead to the network. A flat array is mapped to the header based on the index. This is a very simple data structure that gives ease of integration with the table, hence a fast and smooth table interaction.
 
+## dTable Props
+`dTable` component exposes following props :
+|Sr.|Prop|Type|Description|
+|---|----|----|-----------|
+|1|header|IHeader|Specifies headers title and features like sortable, filterable, template, etc.|
+|2|body|Array<any>|A flat array to specifies table data|
+|3|containerClass|string|species CSS class for top container div|
 ### Sorting
 To enable sorting over a column, add `sortable` flag in `Header`. Notice `sortable` flag added in the above code snippet and see the sorting column in action here [Live](https://ranjanngc.github.io/dTable/)
 
@@ -47,24 +54,25 @@ To enable filter over a column, add `filterable` flag in `Header`:
 //HTML
 <div id="app"></div>
 
-//JavaScript
+//JavaScript (type=module)
 import {dTable} from './dist/index.js';
 
 dTable.init(document.querySelector('#app'));
 
 dTable.data = { 
     
-    Header: [
+    header: [
         { title: "Name", filterable: true }, 
         { title: "Age"}, 
         { title: "Location"}, 
         { title: 'EMail'}, 
         { title: 'Telephone'}
     ],
-    Body: [
+    body: [
         ["Name1", 21, "Place1", 'abc@dTable.com', '011 568974'],
         ["Name2", 42, "Place2", 'abc@dTable.com', '011 568974'],
-    ]
+    ],
+    containerClass: 'container'
 }
 ```
 See [Live](https://ranjanngc.github.io/dTable/), `Name` column can be filtered by clicking on magnifying glass icon. The icon can be changed by adding CSS rule. For example:
@@ -81,14 +89,14 @@ A basic cell Template can be added. To add `template` to cell, add `template` to
 ```JS
 dTable.data = { 
     
-    Header: [
+    header: [
         { title: "Name"}, 
         { title: "Age"}, 
         { title: "Location"}, 
         { title: 'EMail', template: '<a href="mailto:{3}">{3}</a>'}, 
         { title: 'Telephone'}
     ],
-    Body: [
+    body: [
         ["Name1", 21, "Place1", 'abc@dTable.com', '011 568974'],
         ["Name2", 42, "Place2", 'abc@dTable.com', '011 568974'],
     ]
