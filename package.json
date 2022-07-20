@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "d-table.js",
-  "devDependencies": {},
+  "dependencies": {},
 
   "scripts": {
 
@@ -12,8 +12,8 @@
     "docs": "npm run build && copy index.html docs && copy dTable.js docs"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
+  "license": "MIT",
+  "devDependencies": {
 
     "rollup": "^2.77.0"
   }
