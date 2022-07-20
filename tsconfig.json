@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "target": "ES6",
         "module": "ES2015",
         "outDir": "dist",
-        "lib": ["es5", "DOM"]
+        "lib": ["ES6", "DOM"]
     },
-    "files": ["src/index.ts"]
+    "files": ["index.ts"]
 }

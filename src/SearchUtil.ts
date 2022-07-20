@@ -1,3 +1,4 @@
+import TableRenderer from './Table'
 export const SearchUtil = {
 
     showInput: (header: HTMLElement) =>{
@@ -18,7 +19,7 @@ export const SearchUtil = {
         searchInput.style.display = 'block'
         searchInput.focus()
     },
-    hideInput: (table,header: HTMLElement) =>{
+    hideInput: (table:TableRenderer,header: HTMLElement) =>{
         header.querySelectorAll('span').forEach((span) => {
             span.style.display = '';
         })
@@ -27,17 +28,17 @@ export const SearchUtil = {
         searchInput.value =''
         const tableElement = header.closest('table')
        
-        table.data.Body.forEach((item,rowIndex)=>{
+        table._tableData.body.forEach((item,rowIndex)=>{
             tableElement.rows[rowIndex+1].style.display = ''
         })
     },
-    search: (table, header: HTMLElement, index: number) => {
+    search: (table:TableRenderer, header: HTMLElement, index: number) => {
 
         const searchTerm = header.querySelector('input').value;
         const tableElement = header.closest('table');
 
         const reg = new RegExp(searchTerm, 'gi')
-        table.data.Body.forEach((item,rowIndex)=>{
+        table._tableData.body.forEach((item,rowIndex)=>{
             tableElement.rows[rowIndex+1].style.display= item[index].match(reg) ? '': 'none'
         })
     }

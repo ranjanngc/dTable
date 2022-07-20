@@ -6,7 +6,7 @@ export const Header = {
 
         if (headers) {
 
-            let hdr = "<thead data-id='table_header' ><tr>";
+            let hdr = "<thead><tr>";
             headers.forEach((header, index) => {
 
                 header.index = index
@@ -53,13 +53,13 @@ export const Body = {
           }
     },
     resolveTemplate: (template:string, items: Array<any>) => {
-        let templateHtml = '';
+        let templateHtml = template;
         
         items.forEach((val, index) => {
             const reg = new RegExp(`\\{${index}\\}`, 'g')
-            template = template.replace(reg, items[index], );
+            templateHtml = templateHtml.replace(reg, items[index], );
         })
         
-        return template;
+        return templateHtml;
     }
 }

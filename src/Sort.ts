@@ -4,16 +4,16 @@ export const SortUtil = {
 
     sort: (TableUtil, hdrIndex: number ) => {
 
-        const header = TableUtil.data.Header[hdrIndex];
+        const header = TableUtil._tableData.header[hdrIndex];
 
-        if(header.sortOrder == 'ASC'){
-            TableUtil.data.Body = TableUtil.data.Body.sort((a, b) => a[hdrIndex] < b[hdrIndex] ? 1 : -1)
+        if(header.sortOrder =='ASC'){
+            TableUtil._tableData.body = TableUtil._tableData.body.sort((a, b) => a[hdrIndex] < b[hdrIndex] ? 1 : -1)
         }
         else {
-            TableUtil.data.Body = TableUtil.data.Body.sort((a, b) => a[hdrIndex] > b[hdrIndex] ? 1 : -1)
+            TableUtil._tableData.body = TableUtil._tableData.body.sort((a, b) => a[hdrIndex] > b[hdrIndex] ? 1 : -1)
         }
        
         header.sortOrder = (header.sortOrder === 'ASC' ? 'DESC' : 'ASC')
-        TableUtil.render(TableUtil.data, TableUtil.element);
+        TableUtil.render(TableUtil._tableData);
     }
 }

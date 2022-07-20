@@ -1,20 +1,28 @@
 {
-  "name": "d-table",
+  "name": "@d/table",
   "version": "1.0.0",
   "description": "",
-  "main": "d-table.js",
-  "dependencies": {},
-
+  "main": "src/index.ts",
   "scripts": {
-
     "build:tsc": "tsc -p tsconfig.json",
-    "build": "npm run build:tsc && rollup app.ts --file dTable.js --format es",
-    "docs": "npm run build && copy index.html docs && copy dTable.js docs"
+    "build": "rollup app.ts -c rollup.development.config.js",
+    "docs": "npm run build",
+    "build:production": "rollup -c rollup.config.js"
   },
-  "author": "",
+  "author": "Ranjan Kumar",
   "license": "MIT",
   "devDependencies": {
-
-    "rollup": "^2.77.0"
-  }
+    "@rollup/plugin-typescript": "^8.3.3",
+    "rollup": "^2.77.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ranjanngc/dTable.git"
+  },
+  "files": [
+    "src/*"
+  ]
 }
