@@ -1,0 +1,10 @@
+assembly-versioning-scheme: MajorMinor
+mode: ContinuousDelivery
+tag-prefix: 'ver/[0-9].[0-9]/'
+major-version-bump-message: '\[(breaking|major)\]'
+minor-version-bump-message: '\[(feature|minor)\]'
+patch-version-bump-message: '\[(fix|patch)\]'
+branches: {}
+ignore:
+  sha: []
+merge-message-formats: {}
