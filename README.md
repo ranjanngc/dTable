@@ -12,7 +12,7 @@ The idea is to make a pure JavaScript component that has no dependencies, is sup
 * Column Template
 * Grouping
 ## Uses
-```
+```JS
 //HTML
 <div id="app"></div>
 
@@ -43,7 +43,7 @@ To enable sorting over a column, add `sortable` flag in `Header`. Notice `sortab
 
 ### Filtering
 To enable filter over a column, add `filterable` flag in `Header`:
-```
+```JS
 //HTML
 <div id="app"></div>
 
@@ -78,7 +78,7 @@ Note - in the place of SVG, you may use an icon.
 
 ### Template
 A basic cell Template can be added. To add `template` to cell, add `template` to `Header`. Like this:
-```
+```JS
 dTable.data = { 
     
     Header: [
@@ -96,6 +96,83 @@ dTable.data = {
 ```
 With `'<a href="mailto:{3}">{3}</a>'}`, while rendering the cell corresponding data index i.e. {3} will be replaced with data at index position 3 in Body array.
 See [Live](https://ranjanngc.github.io/dTable/), for how this translated into a table (EMail column).
+
+## Styling
+Styling is not shipped with the component. This allows adding your own styling to the table according to your's application theme. Here is how I styled dTable in [Live](https://ranjanngc.github.io/dTable/) demo page.
+
+Note - I admit, I am not good in CSS and will update this section very soon.
+```CSS
+:root{
+    --border:#aab6c1;
+    --header-bg:#F5F5F5;
+}
+body{
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+}
+.container{
+    width: 95vw;
+    height: 86vh;
+    overflow: auto;
+    align-items: center;
+}
+table {
+    border-collapse: separate;
+    border-spacing: 0px;
+    
+}
+table thead {
+    height: 2em;
+}
+table thead th {
+    border-top: .001em solid var(--border);
+}
+table thead, table thead * {
+    background-color: var(--header-bg);
+    position: sticky;
+    top:0px;
+}
+table thead th:first-child, table tbody td:first-child {
+    border-left: .001em solid var(--border);
+}
+
+table thead th, table tbody td {
+    border-bottom: .001em solid var(--border);
+    border-right: .001em solid var(--border);
+}
+
+input[data-role="d-search"] {
+    background-color: var(--header-bg);
+    border-color: var(--header-bg);
+    outline: none
+}
+table th input:active {
+    border-color: transparent;
+    outline-color: transparent;
+}
+table th span[data-role="search"], table th span[data-role="sort"] {
+    cursor: pointer;
+}
+table th span[data-role="search"]{
+    float: left;
+    
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' id='Outline' viewBox='0 0 24 24' width='1.2em' height='1.2em'><path d='M23.707,22.293l-5.969-5.969a10.016,10.016,0,1,0-1.414,1.414l5.969,5.969a1,1,0,0,0,1.414-1.414ZM10,18a8,8,0,1,1,8-8A8.009,8.009,0,0,1,10,18Z'/></svg>");
+    content: '';
+    background-repeat: no-repeat;
+    width: 1.2em;
+    height: 1.3em;
+    margin-left: .3em;
+}
+table th span[data-role="sort"]{
+    float: right;
+    padding-right: .3em;
+}
+
+table tbody td {
+    
+    padding: 8px;
+}
+```
 ## Build
 ```
 yarn install
