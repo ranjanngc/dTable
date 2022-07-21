@@ -42,7 +42,7 @@ dTable.data = {
 `dTable` component exposes following props :
 |Sr.|Prop|Type|Description|
 |---|----|----|-----------|
-|1|header|IHeader|Specifies headers title and features like sortable, filterable, template, etc.|
+|1|header|[IHeader](#iheader)|Specifies headers title and features like sortable, filterable, template, etc.|
 |2|body|Array<any>|A flat array to specifies table data|
 |3|containerClass|string|species CSS class for top container div|
 ### Sorting
@@ -105,6 +105,17 @@ dTable.data = {
 With `'<a href="mailto:{3}">{3}</a>'}`, while rendering the cell corresponding data index i.e. {3} will be replaced with data at index position 3 in Body array.
 See [Live](https://ranjanngc.github.io/dTable/), for how this translated into a table (EMail column).
 
+## Type detail
+#### IHeader
+```js
+interface IHeader {
+    
+    title: string,
+    template?: string,
+    sortable?: boolean,
+    filterable?: boolean,
+}
+```
 ## Styling
 Styling is not shipped with the component. This allows adding your own styling to the table according to your's application theme. Here is how I styled dTable in [Live](https://ranjanngc.github.io/dTable/) demo page.
 
