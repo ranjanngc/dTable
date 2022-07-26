@@ -21,7 +21,7 @@ import {dTable} from './dist/index.js';
 
 dTable.init(document.querySelector('#app'));
 
-dTable.data = { 
+dTable.data.tableData = { 
     
     header: [
         { title: "Name" }, 
