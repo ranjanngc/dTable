@@ -3,7 +3,7 @@ import DTable from './dist/dTable.es';
 const dTable = new DTable('#app');
 //dTable.init(document.querySelector('#app'));
 
-dTable.data = { 
+dTable.data.tableData = { 
 
     header: [
         { title: "Name", filterable:true }, 
@@ -20,11 +20,11 @@ dTable.data = {
     containerClass: 'container'
 }
 
-let tableBodyData = dTable.data.body;
+let tableBodyData = dTable.data.tableData.body;
 
-for(let i=0,j =500; i< j ;i ++){
+for(let i=0,j =100; i< j ;i ++){
 
     tableBodyData.push([`Name00${i}`,(i+5), `Location${500-i}`, 'abc@gmail.com', '+91 011 568974', 'action data']);
 }
 
-dTable.rows = tableBodyData
+dTable.data.rows = tableBodyData
