@@ -19,9 +19,9 @@ The idea is to make a pure JavaScript component that has no dependencies, is sup
 //JavaScript
 import {dTable} from './dist/index.js';
 
-dTable.init(document.querySelector('#app'));
+const dTable = new DTable('#app');
 
-dTable.data.tableData = { 
+dTable.props.data = { 
     
     header: [
         { title: "Name" }, 
@@ -57,9 +57,9 @@ To enable filter over a column, add `filterable` flag in `Header`:
 //JavaScript (type=module)
 import {dTable} from './dist/index.js';
 
-dTable.init(document.querySelector('#app'));
+const dTable = new DTable('#app');
 
-dTable.data.tableData = { 
+dTable.props.data = { 
     
     header: [
         { title: "Name", filterable: true }, 
@@ -87,7 +87,9 @@ Note - in the place of SVG, you may use an icon.
 ### Template
 A basic cell Template can be added. To add `template` to cell, add `template` to `Header`. Like this:
 ```JS
-dTable.data.tableData = { 
+const dTable = new DTable('#app');
+
+dTable.props.data = { 
     
     header: [
         { title: "Name"}, 
