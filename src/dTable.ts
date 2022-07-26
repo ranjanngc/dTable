@@ -2,9 +2,9 @@ import ITableData from './ITableData'
 import TableRenderer, { TableRendererType } from './Table'
 
 const _proxyData = {
-    tableData: {} as ITableData,
-    tableRenderer: {} as TableRendererType,
-    rows: []
+    data: {} as ITableData,
+    renderEngine: {} as TableRendererType,
+    rows: [],
 }
 
 const _proxyHandler = {
@@ -14,8 +14,8 @@ const _proxyHandler = {
             Reflect.set(target, prop, value)
         }
 
-        if(prop === 'tableData' || prop === 'rows'){
-            target.tableRenderer.render(target.tableData);
+        if(prop === 'data' || prop === 'rows'){
+            target.renderEngine.render(target.data);
         }
 
         return true;
@@ -23,30 +23,11 @@ const _proxyHandler = {
 }
 export default class DTable {
     
-    //private _tableData:ITableData;
-    //private _tableRenderer:TableRendererType;
-    private data; 
+    private props; 
 
     constructor(selector: string) {
-        this.data = new Proxy(_proxyData, _proxyHandler);
-        // this._tableRenderer = new TableRenderer(selector)
-        this.data.tableRenderer = new TableRenderer(selector);
+
+        this.props = new Proxy(_proxyData, _proxyHandler);
+        this.props.renderEngine = new TableRenderer(selector);
     }
-
-    // get data() {
-
-    //     return this._tableData
-    // }
-
-    // set data(value:ITableData) {
-
-    //     this._tableData = value;
-    //     this._tableRenderer.render(this._tableData)
-    // }
-
-    // set rows(value) {
-
-    //     this._tableData.body = value;
-    //     this._tableRenderer.render(this._tableData)
-    // }
 }
