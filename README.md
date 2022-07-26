@@ -59,7 +59,7 @@ import {dTable} from './dist/index.js';
 
 dTable.init(document.querySelector('#app'));
 
-dTable.data = { 
+dTable.data.tableData = { 
     
     header: [
         { title: "Name", filterable: true }, 
@@ -87,7 +87,7 @@ Note - in the place of SVG, you may use an icon.
 ### Template
 A basic cell Template can be added. To add `template` to cell, add `template` to `Header`. Like this:
 ```JS
-dTable.data = { 
+dTable.data.tableData = { 
     
     header: [
         { title: "Name"}, 
